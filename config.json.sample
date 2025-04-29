@@ -1,0 +1,50 @@
+{
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "logs/climate_action.log"
+  },
+  "data_agent": {
+    "sources": ["azure_blob", "csv", "api"],
+    "cache_dir": "cache/data",
+    "data_sources": {
+      "energy": {
+        "type": "csv",
+        "config": {
+          "files": ["data/sample_scope2_electricity.csv"]
+        }
+      },
+      "business_travel": {
+        "type": "csv",
+        "config": {
+          "files": ["data/sample_scope3_travel.csv"]
+        }
+      },
+      "waste": {
+        "type": "csv",
+        "config": {
+          "files": ["data/sample_scope3_waste.csv"]
+        }
+      }
+    }
+  },
+  "carbon_agent": {
+    "emissions_factors_source": "data/emissions_factors.json",
+    "calculation_method": "ghg_protocol"
+  },
+  "recommendation_agent": {
+    "industry_insights_enabled": true,
+    "max_recommendations": 20
+  },
+  "simulation_agent": {
+    "models": {
+      "business_growth": {"type": "linear", "params": {"default_rate": 0.03}},
+      "carbon_intensity": {"type": "exponential", "params": {"default_rate": -0.01}}
+    },
+    "simulation_years": 10
+  },
+  "reporting_agent": {
+    "output_dir": "reports",
+    "formats": ["json", "pdf", "html"]
+  }
+}

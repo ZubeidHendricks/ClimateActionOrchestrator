@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  climate-orchestrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: climate-orchestrator
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./logs:/app/logs
+      - ./.env:/app/.env
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    networks:
+      - climate-network
+    command: ["python", "-m", "tests.verify_installation"]
+    # After verification passes, you can change the command to run the actual application
+    # command: ["python", "orchestrator.py"]
+
+  # Azurite for local Azure Blob Storage emulation
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: azurite
+    ports:
+      - "10000:10000"  # Blob service
+      - "10001:10001"  # Queue service
+      - "10002:10002"  # Table service
+    volumes:
+      - ./azurite_data:/data
+    networks:
+      - climate-network
+
+networks:
+  climate-network:
+    driver: bridge

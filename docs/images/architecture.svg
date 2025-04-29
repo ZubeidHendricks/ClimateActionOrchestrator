@@ -1,0 +1,92 @@
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8f9fa" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">Climate Action Orchestrator Architecture</text>
+  
+  <!-- Core Orchestrator -->
+  <rect x="300" y="80" width="200" height="80" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+  <text x="400" y="120" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Climate Action Orchestrator</text>
+  <text x="400" y="140" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Core Coordination System</text>
+  
+  <!-- Agent Boxes -->
+  <rect x="50" y="220" width="160" height="70" rx="8" ry="8" fill="#27ae60" stroke="#219653" stroke-width="2"/>
+  <text x="130" y="250" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Data Collection Agent</text>
+  <text x="130" y="270" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Gathers Operational Data</text>
+  
+  <rect x="230" y="220" width="160" height="70" rx="8" ry="8" fill="#27ae60" stroke="#219653" stroke-width="2"/>
+  <text x="310" y="250" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Carbon Calculation Agent</text>
+  <text x="310" y="270" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Calculates Emissions</text>
+  
+  <rect x="410" y="220" width="160" height="70" rx="8" ry="8" fill="#27ae60" stroke="#219653" stroke-width="2"/>
+  <text x="490" y="250" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Recommendation Agent</text>
+  <text x="490" y="270" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Generates Actions</text>
+  
+  <rect x="590" y="220" width="160" height="70" rx="8" ry="8" fill="#27ae60" stroke="#219653" stroke-width="2"/>
+  <text x="670" y="250" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Simulation Agent</text>
+  <text x="670" y="270" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Models Scenarios</text>
+  
+  <rect x="320" y="310" width="160" height="70" rx="8" ry="8" fill="#27ae60" stroke="#219653" stroke-width="2"/>
+  <text x="400" y="340" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Reporting Agent</text>
+  <text x="400" y="360" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Generates Reports</text>
+  
+  <!-- Data Sources -->
+  <rect x="70" y="420" width="120" height="60" rx="8" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="130" y="450" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Azure Blob</text>
+  <text x="130" y="467" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Data Storage</text>
+  
+  <rect x="210" y="420" width="120" height="60" rx="8" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="270" y="450" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Azure Cosmos DB</text>
+  <text x="270" y="467" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Database</text>
+  
+  <rect x="350" y="420" width="120" height="60" rx="8" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="410" y="450" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Azure AI</text>
+  <text x="410" y="467" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Intelligence</text>
+  
+  <rect x="490" y="420" width="120" height="60" rx="8" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="550" y="450" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Power BI</text>
+  <text x="550" y="467" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Visualization</text>
+  
+  <rect x="630" y="420" width="120" height="60" rx="8" ry="8" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="690" y="450" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Azure AD</text>
+  <text x="690" y="467" font-family="Arial" font-size="11" text-anchor="middle" fill="white">Authentication</text>
+  
+  <!-- Output Reports -->
+  <rect x="230" y="520" width="160" height="50" rx="8" ry="8" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+  <text x="310" y="550" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Regulatory Reports</text>
+  
+  <rect x="410" y="520" width="160" height="50" rx="8" ry="8" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+  <text x="490" y="550" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Action Plans</text>
+  
+  <!-- Connection lines from Orchestrator to Agents -->
+  <line x1="400" y1="160" x2="130" y2="220" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="400" y1="160" x2="310" y2="220" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="400" y1="160" x2="490" y2="220" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="400" y1="160" x2="670" y2="220" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="400" y1="160" x2="400" y2="310" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  
+  <!-- Connection lines from Agents to Data Sources -->
+  <line x1="130" y1="290" x2="130" y2="420" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="310" y1="290" x2="270" y2="420" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="490" y1="290" x2="410" y2="420" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="670" y1="290" x2="550" y2="420" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="400" y1="380" x2="690" y2="420" stroke="#2c3e50" stroke-width="1.5" stroke-dasharray="5,3"/>
+  
+  <!-- Connection lines from Reporting Agent to Outputs -->
+  <line x1="360" y1="380" x2="310" y2="520" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="440" y1="380" x2="490" y2="520" stroke="#2c3e50" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- Legend -->
+  <rect x="600" y="520" width="15" height="15" fill="#3498db" stroke="#2980b9" stroke-width="1"/>
+  <text x="625" y="532" font-family="Arial" font-size="12" text-anchor="start" fill="#2c3e50">Core System</text>
+  
+  <rect x="600" y="540" width="15" height="15" fill="#27ae60" stroke="#219653" stroke-width="1"/>
+  <text x="625" y="552" font-family="Arial" font-size="12" text-anchor="start" fill="#2c3e50">Agent Components</text>
+  
+  <rect x="600" y="560" width="15" height="15" fill="#e74c3c" stroke="#c0392b" stroke-width="1"/>
+  <text x="625" y="572" font-family="Arial" font-size="12" text-anchor="start" fill="#2c3e50">Azure Services</text>
+  
+  <rect x="600" y="580" width="15" height="15" fill="#9b59b6" stroke="#8e44ad" stroke-width="1"/>
+  <text x="625" y="592" font-family="Arial" font-size="12" text-anchor="start" fill="#2c3e50">Output Reports</text>
+</svg>

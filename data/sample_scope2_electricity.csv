@@ -1,0 +1,19 @@
+facility_name,electricity_kwh,grid_region,month,year
+Headquarters,52500,WECC,1,2024
+Headquarters,48750,WECC,2,2024
+Headquarters,46800,WECC,3,2024
+Headquarters,45200,WECC,4,2024
+Headquarters,47500,WECC,5,2024
+Headquarters,55000,WECC,6,2024
+Austin Office,22300,ERCOT,1,2024
+Austin Office,21500,ERCOT,2,2024
+Austin Office,23400,ERCOT,3,2024
+Austin Office,24800,ERCOT,4,2024
+Austin Office,27500,ERCOT,5,2024
+Austin Office,29200,ERCOT,6,2024
+Data Center,145000,RFC,1,2024
+Data Center,142800,RFC,2,2024
+Data Center,146500,RFC,3,2024
+Data Center,143700,RFC,4,2024
+Data Center,147200,RFC,5,2024
+Data Center,152000,RFC,6,2024
