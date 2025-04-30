@@ -1,0 +1,234 @@
+{% extends "layout.html" %}
+
+{% block page_title %}Organization Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card metric-card">
+            <div class="metric-title">Total Carbon Footprint</div>
+            <div class="metric-value">{{ data.emissions.total }} tCO₂e</div>
+            <div class="small {% if data.emissions.trend > 0 %}trend-up{% else %}trend-down{% endif %}">
+                {% if data.emissions.trend > 0 %}
+                <i class="fas fa-arrow-up"></i> {{ data.emissions.trend }}% since last quarter
+                {% else %}
+                <i class="fas fa-arrow-down"></i> {{ data.emissions.trend|abs }}% since last quarter
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card metric-card">
+            <div class="metric-title">Carbon Intensity</div>
+            <div class="metric-value">{{ (data.emissions.total / data.organization.employees)|round(2) }} tCO₂e/employee</div>
+            <div class="small trend-down">
+                <i class="fas fa-arrow-down"></i> 1.8% since last quarter
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card metric-card">
+            <div class="metric-title">Sustainability Score</div>
+            <div class="metric-value">{{ data.organization.sustainability_score }}/100</div>
+            <div class="small trend-down">
+                <i class="fas fa-arrow-up"></i> 5 points since last quarter
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <i class="fas fa-chart-bar me-2"></i> Emissions Breakdown
+    </div>
+    <div class="card-body">
+        <div class="chart-container">
+            <canvas id="emissionsChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-lightbulb me-2"></i> Top Recommendations
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for rec in data.recommendations[:3] %}
+                    <a href="/recommendations" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ rec.title }}</h5>
+                            <span class="badge bg-success rounded-pill">{{ rec.potential_reduction }} tCO₂e</span>
+                        </div>
+                        <p class="mb-1">{{ rec.description }}</p>
+                        <small class="text-muted">Estimated cost: ${{ rec.estimated_cost }} · {{ rec.timeframe }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/recommendations" class="btn btn-outline-primary btn-sm">View All Recommendations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-robot me-2"></i> Agent Activity
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Agent</th>
+                                <th>Status</th>
+                                <th>Last Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for agent in data.agents %}
+                            <tr>
+                                <td>{{ agent.name }}</td>
+                                <td><span class="agent-status-active">{{ agent.status }}</span></td>
+                                <td>{{ agent.last_activity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="/agents" class="btn btn-outline-primary btn-sm">View All Agents</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <i class="fas fa-upload me-2"></i> Upload New Data
+    </div>
+    <div class="card-body">
+        <p>Upload new operational data for analysis</p>
+        <div class="data-upload-area" onclick="document.getElementById('file-upload').click()">
+            <i class="fas fa-file-upload fa-2x mb-2"></i>
+            <p>Drag and drop files here, or click to select files</p>
+            <p class="small text-muted">Supported formats: CSV, Excel, JSON</p>
+            <input type="file" id="file-upload" style="display: none" multiple>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Emissions Chart
+    var ctx = document.getElementById('emissionsChart').getContext('2d');
+    var data = {
+        labels: [{% for quarter in data.emissions.quarterly_data %}'{{ quarter.quarter }}',{% endfor %}],
+        datasets: [
+            {
+                label: 'Scope 1 (Direct)',
+                data: [{% for quarter in data.emissions.quarterly_data %}{{ quarter.scope1 }},{% endfor %}],
+                backgroundColor: 'rgba(16, 124, 16, 0.7)',
+            },
+            {
+                label: 'Scope 2 (Electricity)',
+                data: [{% for quarter in data.emissions.quarterly_data %}{{ quarter.scope2 }},{% endfor %}],
+                backgroundColor: 'rgba(255, 165, 0, 0.7)',
+            },
+            {
+                label: 'Scope 3 (Indirect)',
+                data: [{% for quarter in data.emissions.quarterly_data %}{{ quarter.scope3 }},{% endfor %}],
+                backgroundColor: 'rgba(209, 52, 56, 0.7)',
+            }
+        ]
+    };
+    
+    var emissionsChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Quarterly Emissions by Scope (tCO₂e)'
+                },
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
+                    title: {
+                        display: true,
+                        text: 'tCO₂e'
+                    }
+                }
+            }
+        }
+    });
+    
+    // Agent status updates
+    function updateAgentActivity() {
+        $.ajax({
+            url: '/api/agents/status',
+            type: 'GET',
+            success: function(data) {
+                var tableBody = '';
+                data.slice(0, 5).forEach(function(agent) {
+                    tableBody += '<tr>' +
+                                '<td>' + agent.name + '</td>' +
+                                '<td><span class="agent-status-active">' + agent.status + '</span></td>' +
+                                '<td>' + agent.last_activity + '</td>' +
+                                '</tr>';
+                });
+                $('table tbody').html(tableBody);
+            }
+        });
+    }
+    
+    // Update agent status every 10 seconds
+    setInterval(updateAgentActivity, 10000);
+    
+    // File upload handling
+    document.getElementById('file-upload').addEventListener('change', function(e) {
+        var files = e.target.files;
+        if (files.length > 0) {
+            alert('Files selected for upload: ' + files.length + '\n\nIn a production environment, these would be processed by the Data Collection Agent.');
+        }
+    });
+    
+    // Drag and drop functionality
+    var uploadArea = document.querySelector('.data-upload-area');
+    
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#0078d4';
+        uploadArea.style.backgroundColor = 'rgba(0, 120, 212, 0.05)';
+    });
+    
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ccc';
+        uploadArea.style.backgroundColor = 'transparent';
+    });
+    
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#ccc';
+        uploadArea.style.backgroundColor = 'transparent';
+        
+        var files = e.dataTransfer.files;
+        if (files.length > 0) {
+            alert('Files dropped for upload: ' + files.length + '\n\nIn a production environment, these would be processed by the Data Collection Agent.');
+        }
+    });
+</script>
+{% endblock %}

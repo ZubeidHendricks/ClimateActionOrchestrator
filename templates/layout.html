@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Action Orchestrator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --azure-blue: #0078d4;
+            --azure-dark: #106ebe;
+            --azure-light: #deecf9;
+            --azure-gray: #605e5c;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar-custom {
+            background-color: var(--azure-blue);
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white;
+        }
+        .navbar-custom .navbar-brand {
+            font-weight: bold;
+        }
+        .sidebar {
+            background-color: white;
+            border-right: 1px solid #eee;
+            height: calc(100vh - 56px);
+            position: fixed;
+            width: 250px;
+            padding-top: 20px;
+        }
+        .sidebar .nav-link {
+            color: var(--azure-gray);
+            padding: 10px 20px;
+            border-radius: 0;
+            border-left: 3px solid transparent;
+        }
+        .sidebar .nav-link.active {
+            color: var(--azure-blue);
+            background-color: var(--azure-light);
+            border-left: 3px solid var(--azure-blue);
+        }
+        .sidebar .nav-link:hover {
+            background-color: #f8f9fa;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            margin-bottom: 20px;
+        }
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+        .footer {
+            background-color: white;
+            border-top: 1px solid #eee;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--azure-gray);
+        }
+        .metric-card {
+            text-align: center;
+            padding: 20px;
+        }
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--azure-blue);
+            margin: 10px 0;
+        }
+        .metric-title {
+            font-size: 1rem;
+            color: var(--azure-gray);
+        }
+        .trend-up {
+            color: #d13438;
+        }
+        .trend-down {
+            color: #107c10;
+        }
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+        .agent-status-active {
+            color: #107c10;
+            font-weight: 500;
+        }
+        .recommendation-card {
+            margin-bottom: 20px;
+        }
+        .recommendation-title {
+            color: var(--azure-blue);
+            font-weight: 600;
+        }
+        .recommendation-metrics {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--azure-gray);
+        }
+        .metric-value-sm {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .reduction {
+            color: #107c10;
+        }
+        .cost {
+            color: #d13438;
+        }
+        .data-upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        /* Azure Theme Overrides */
+        .btn-primary {
+            background-color: var(--azure-blue);
+            border-color: var(--azure-blue);
+        }
+        .btn-outline-primary {
+            color: var(--azure-blue);
+            border-color: var(--azure-blue);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--azure-blue);
+            border-color: var(--azure-blue);
+        }
+        .spinner-border {
+            color: var(--azure-blue);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Climate Action Orchestrator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-cog"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-circle"></i> Zubeid Hendricks
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 d-none d-md-block p-0">
+                <div class="sidebar">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/agents' %}active{% endif %}" href="/agents">
+                                <i class="fas fa-robot me-2"></i> AI Agents
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/data-sources' %}active{% endif %}" href="/data-sources">
+                                <i class="fas fa-database me-2"></i> Data Sources
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/recommendations' %}active{% endif %}" href="/recommendations">
+                                <i class="fas fa-lightbulb me-2"></i> Recommendations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/reports' %}active{% endif %}" href="/reports">
+                                <i class="fas fa-file-alt me-2"></i> Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cog me-2"></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="mt-5 ps-3">
+                        <div class="sidebar-heading d-flex align-items-center mb-3">
+                            <span class="text-muted small">AZURE DEPLOYMENT</span>
+                        </div>
+                        <div class="small text-muted mb-2">
+                            <i class="fas fa-check-circle text-success me-1"></i> App Service: Running
+                        </div>
+                        <div class="small text-muted mb-2">
+                            <i class="fas fa-check-circle text-success me-1"></i> AI Agent Service: Active
+                        </div>
+                        <div class="small text-muted">
+                            <i class="fas fa-clock me-1"></i> Last updated: 3 min ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-10 ms-auto main-content">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h2>{% block page_title %}{% endblock %}</h2>
+                    </div>
+                </div>
+
+                {% block content %}{% endblock %}
+                
+                <div class="footer mt-5">
+                    <p>© 2025 Climate Action Orchestrator | Running on Microsoft Azure | <a href="#">GitHub Repository</a></p>
+                    <p>Built for Microsoft AI Agents Hackathon 2025</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

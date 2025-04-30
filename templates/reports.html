@@ -1,0 +1,363 @@
+{% extends "layout.html" %}
+
+{% block page_title %}Reports{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-file-alt me-2"></i> Generated Reports</span>
+            <div>
+                <button class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i> Generate New Report
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i> The Climate Action Orchestrator generates standardized reports for sustainability compliance and stakeholder communication.
+        </div>
+        
+        <div class="table-responsive mt-3">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Type</th>
+                        <th>Generated Date</th>
+                        <th>Coverage Period</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GHG Protocol Report - Q1 2023</strong></td>
+                        <td>GHG Protocol</td>
+                        <td>Apr 15, 2023</td>
+                        <td>Q1 2023</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>TCFD Climate Disclosure - 2023</strong></td>
+                        <td>TCFD</td>
+                        <td>Apr 20, 2023</td>
+                        <td>FY 2023</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>CDP Climate Change Questionnaire</strong></td>
+                        <td>CDP</td>
+                        <td>Apr 25, 2023</td>
+                        <td>FY 2023</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Executive Dashboard - Q1 2023</strong></td>
+                        <td>Executive Summary</td>
+                        <td>Apr 10, 2023</td>
+                        <td>Q1 2023</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                <i class="fas fa-share"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-alt me-2"></i> Report Schedule
+            </div>
+            <div class="card-body">
+                <p>Configure automated report generation on a regular schedule.</p>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Report Type</th>
+                                <th>Frequency</th>
+                                <th>Next Generation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GHG Protocol Report</td>
+                                <td>Quarterly</td>
+                                <td>Jul 5, 2023</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Executive Dashboard</td>
+                                <td>Monthly</td>
+                                <td>May 5, 2023</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>TCFD Disclosure</td>
+                                <td>Annually</td>
+                                <td>Apr 15, 2024</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i> Add Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-user-friends me-2"></i> Report Recipients
+            </div>
+            <div class="card-body">
+                <p>Configure stakeholders who should receive automated reports.</p>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Recipient</th>
+                                <th>Role</th>
+                                <th>Report Types</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sarah Johnson</td>
+                                <td>Sustainability Director</td>
+                                <td>All</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Michael Chen</td>
+                                <td>CEO</td>
+                                <td>Executive Summary</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Emily Rodriguez</td>
+                                <td>Compliance Manager</td>
+                                <td>GHG Protocol, TCFD, CDP</td>
+                                <td>
+                                    <button class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i> Add Recipient
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <i class="fas fa-cogs me-2"></i> Report Types
+    </div>
+    <div class="card-body">
+        <p>The Climate Action Orchestrator's Reporting Agent can generate various report types to meet different stakeholder needs and compliance requirements.</p>
+        
+        <div class="accordion mt-3" id="reportAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGHG">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGHG">
+                        GHG Protocol Report
+                    </button>
+                </h2>
+                <div id="collapseGHG" class="accordion-collapse collapse show" data-bs-parent="#reportAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Standard emissions inventory report following the Greenhouse Gas Protocol framework.</p>
+                        <p><strong>Contents:</strong></p>
+                        <ul>
+                            <li>Organizational and operational boundaries</li>
+                            <li>Emissions by scope (Scope 1, 2, and 3)</li>
+                            <li>Emissions by gas (CO₂, CH₄, N₂O, etc.)</li>
+                            <li>Emissions by source category</li>
+                            <li>Base year emissions and recalculations</li>
+                            <li>Calculation methodologies and emissions factors</li>
+                        </ul>
+                        <p><strong>Use Cases:</strong> Corporate sustainability reporting, environmental management systems, regulatory compliance</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTCFD">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTCFD">
+                        TCFD Disclosure
+                    </button>
+                </h2>
+                <div id="collapseTCFD" class="accordion-collapse collapse" data-bs-parent="#reportAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Climate-related financial disclosure following the Task Force on Climate-related Financial Disclosures (TCFD) framework.</p>
+                        <p><strong>Contents:</strong></p>
+                        <ul>
+                            <li>Governance around climate-related risks and opportunities</li>
+                            <li>Strategy for addressing climate-related risks and opportunities</li>
+                            <li>Risk management processes for climate-related risks</li>
+                            <li>Metrics and targets used to assess and manage climate-related risks and opportunities</li>
+                        </ul>
+                        <p><strong>Use Cases:</strong> Investor communications, annual sustainability reports, ESG disclosures</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCDP">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCDP">
+                        CDP Climate Change Questionnaire
+                    </button>
+                </h2>
+                <div id="collapseCDP" class="accordion-collapse collapse" data-bs-parent="#reportAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Responses to the CDP (formerly Carbon Disclosure Project) Climate Change Questionnaire.</p>
+                        <p><strong>Contents:</strong></p>
+                        <ul>
+                            <li>Governance and business strategy questions</li>
+                            <li>Risks and opportunities assessment</li>
+                            <li>Emissions data and calculation methodologies</li>
+                            <li>Emissions reduction initiatives and targets</li>
+                            <li>Carbon pricing mechanisms</li>
+                            <li>Verification and assurance</li>
+                        </ul>
+                        <p><strong>Use Cases:</strong> CDP submission, stakeholder communication, ESG ratings improvement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingExecutive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExecutive">
+                        Executive Summary
+                    </button>
+                </h2>
+                <div id="collapseExecutive" class="accordion-collapse collapse" data-bs-parent="#reportAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> High-level summary of climate performance for executive leadership.</p>
+                        <p><strong>Contents:</strong></p>
+                        <ul>
+                            <li>Key emissions metrics and trends</li>
+                            <li>Progress against reduction targets</li>
+                            <li>Top sustainability opportunities</li>
+                            <li>Benchmarking against industry peers</li>
+                            <li>Financial implications and business case</li>
+                            <li>Recommended next steps</li>
+                        </ul>
+                        <p><strong>Use Cases:</strong> Executive briefings, board presentations, strategic planning</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Preview Modal -->
+<div class="modal fade" id="reportPreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <img src="https://via.placeholder.com/800x600.png?text=Report+Preview" class="img-fluid" alt="Report Preview">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize table interaction
+    $(document).ready(function() {
+        // Add click handler for download buttons to show preview modal
+        $('.table .btn-outline-primary:first-child').on('click', function(e) {
+            e.preventDefault();
+            $('#reportPreviewModal').modal('show');
+        });
+    });
+</script>
+{% endblock %}

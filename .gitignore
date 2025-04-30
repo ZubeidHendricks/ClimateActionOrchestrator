@@ -1,0 +1,58 @@
+# Demo files that shouldn't be deployed
+run_agent_demo.py
+agent_realtime_demo.py
+demo_commands.ps1
+demo_commands.bat
+demo_script.md
+demo_video_script.md
+azure_demo_script.md
+azure_agent_architecture.md
+run_demo.py
+dashboard_requirements.txt
+run_dashboard.bat
+
+# Python virtual environment
+venv/
+env/
+.env
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Log files
+logs/
+*.log
+
+# Local development files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,25 @@
+{
+  "organization": {
+    "name": "Example Corp",
+    "industry": "Technology",
+    "employees": 500,
+    "locations": [
+      {"city": "Seattle", "country": "USA", "type": "headquarters"},
+      {"city": "Austin", "country": "USA", "type": "office"}
+    ]
+  },
+  "data_sources": {
+    "energy": {
+      "type": "csv",
+      "config": {
+        "files": ["data/scope2_data.csv"]
+      }
+    },
+    "business_travel": {
+      "type": "csv",
+      "config": {
+        "files": ["data/scope3_travel.csv"]
+      }
+    }
+  }
+}

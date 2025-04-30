@@ -1,0 +1,466 @@
+{% extends "layout.html" %}
+
+{% block page_title %}AI Agents{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-robot me-2"></i> AI Agent Activity</span>
+            <div>
+                <button class="btn btn-outline-primary btn-sm me-2">
+                    <i class="fas fa-sync-alt me-1"></i> Refresh
+                </button>
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-cog me-1"></i> Agent Settings
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-success">
+            <i class="fas fa-info-circle me-2"></i> All agents are currently active and functioning normally.
+        </div>
+        
+        <div class="table-responsive mt-3">
+            <table class="table table-hover" id="agentsTable">
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Last Activity</th>
+                        <th>Tasks Processed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agent in data.agents %}
+                    <tr>
+                        <td><strong>{{ agent.name }}</strong></td>
+                        <td>{{ agent.description }}</td>
+                        <td><span class="agent-status-active">{{ agent.status }}</span></td>
+                        <td>{{ agent.last_activity }}</td>
+                        <td>{{ agent.tasks_processed }}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" onclick="viewAgentDetails('{{ agent.name }}')">
+                                <i class="fas fa-eye me-1"></i> Details
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-line me-2"></i> Agent Activity Timeline
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="agentActivityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-project-diagram me-2"></i> Agent Communication
+            </div>
+            <div class="card-body">
+                <div id="communicationLog" class="p-3 bg-light" style="height: 300px; overflow-y: auto; font-family: monospace;">
+                    <div><span class="text-muted">[09:15:32]</span> <span class="text-primary">Data Collection Agent → Carbon Calculation Agent:</span> Sending operational data...</div>
+                    <div><span class="text-muted">[09:15:47]</span> <span class="text-success">Carbon Calculation Agent → Recommendation Agent:</span> Sharing emissions profile...</div>
+                    <div><span class="text-muted">[09:16:02]</span> <span class="text-warning">Recommendation Agent → Simulation Agent:</span> Requesting scenario analysis...</div>
+                    <div><span class="text-muted">[09:16:15]</span> <span class="text-info">Simulation Agent → Recommendation Agent:</span> Sending simulation results...</div>
+                    <div><span class="text-muted">[09:16:30]</span> <span class="text-danger">Recommendation Agent → Reporting Agent:</span> Sharing prioritized recommendations...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <i class="fas fa-cogs me-2"></i> Agent Configuration
+    </div>
+    <div class="card-body">
+        <p>The Climate Action Orchestrator uses a multi-agent system powered by Azure AI Agent Service. Each agent is specialized in a specific task and collaborates with other agents to achieve the overall goal.</p>
+        
+        <div class="accordion mt-3" id="agentAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingData">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseData">
+                        Data Collection Agent
+                    </button>
+                </h2>
+                <div id="collapseData" class="accordion-collapse collapse show" data-bs-parent="#agentAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Gathers operational data from various sources including uploaded files, API connections, and database integrations.</p>
+                        <p><strong>Azure Services:</strong> Azure Storage, Azure Logic Apps, Azure Functions</p>
+                        <p><strong>Key Capabilities:</strong></p>
+                        <ul>
+                            <li>Automated data collection from multiple sources</li>
+                            <li>Data validation and formatting</li>
+                            <li>Secure handling of sensitive business information</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCarbon">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCarbon">
+                        Carbon Calculation Agent
+                    </button>
+                </h2>
+                <div id="collapseCarbon" class="accordion-collapse collapse" data-bs-parent="#agentAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Applies emissions factors to quantify carbon footprint based on operational data.</p>
+                        <p><strong>Azure Services:</strong> Azure Machine Learning, Azure Cosmos DB, Azure Functions</p>
+                        <p><strong>Key Capabilities:</strong></p>
+                        <ul>
+                            <li>Standards-compliant GHG Protocol calculations</li>
+                            <li>Region-specific emissions factors</li>
+                            <li>Historical data analysis and trends</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingRecommendation">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRecommendation">
+                        Recommendation Agent
+                    </button>
+                </h2>
+                <div id="collapseRecommendation" class="accordion-collapse collapse" data-bs-parent="#agentAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Analyzes data to generate sustainability recommendations tailored to the organization.</p>
+                        <p><strong>Azure Services:</strong> Azure OpenAI Service, Azure Cognitive Services, Azure Functions</p>
+                        <p><strong>Key Capabilities:</strong></p>
+                        <ul>
+                            <li>Industry-specific best practices</li>
+                            <li>Cost-benefit analysis of initiatives</li>
+                            <li>Implementation difficulty assessment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSimulation">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSimulation">
+                        Simulation Agent
+                    </button>
+                </h2>
+                <div id="collapseSimulation" class="accordion-collapse collapse" data-bs-parent="#agentAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Projects outcomes of different sustainability initiatives through simulation models.</p>
+                        <p><strong>Azure Services:</strong> Azure Batch, Azure Machine Learning, Azure Data Factory</p>
+                        <p><strong>Key Capabilities:</strong></p>
+                        <ul>
+                            <li>"What-if" scenario modeling</li>
+                            <li>Multi-year projection capabilities</li>
+                            <li>Financial impact assessment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingReporting">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseReporting">
+                        Reporting Agent
+                    </button>
+                </h2>
+                <div id="collapseReporting" class="accordion-collapse collapse" data-bs-parent="#agentAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Description:</strong> Generates standardized documentation and reports for stakeholders.</p>
+                        <p><strong>Azure Services:</strong> Azure Report Services, Power BI Embedded, Azure Blob Storage</p>
+                        <p><strong>Key Capabilities:</strong></p>
+                        <ul>
+                            <li>Compliance with GHG Protocol, TCFD, and CDP reporting standards</li>
+                            <li>Executive summary generation</li>
+                            <li>Interactive dashboards and visualizations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Agent Details Modal -->
+<div class="modal fade" id="agentDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agentDetailsTitle">Agent Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="agentDetailsBody">
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Loading agent details...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Agent Activity Chart
+    var activityCtx = document.getElementById('agentActivityChart').getContext('2d');
+    var activityChart = new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: ['9:00 AM', '9:05 AM', '9:10 AM', '9:15 AM', '9:20 AM', '9:25 AM', '9:30 AM'],
+            datasets: [
+                {
+                    label: 'Data Collection Agent',
+                    data: [5, 7, 10, 8, 6, 12, 9],
+                    borderColor: 'rgba(0, 120, 212, 1)',
+                    backgroundColor: 'rgba(0, 120, 212, 0.1)',
+                    tension: 0.4
+                },
+                {
+                    label: 'Carbon Calculation Agent',
+                    data: [3, 4, 8, 6, 9, 7, 5],
+                    borderColor: 'rgba(16, 124, 16, 1)',
+                    backgroundColor: 'rgba(16, 124, 16, 0.1)',
+                    tension: 0.4
+                },
+                {
+                    label: 'Recommendation Agent',
+                    data: [1, 2, 3, 5, 4, 6, 3],
+                    borderColor: 'rgba(255, 165, 0, 1)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.1)',
+                    tension: 0.4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Task Processing by Agent'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Tasks Processed'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Agent communication log simulation
+    function addCommunicationLog() {
+        var agents = [
+            { name: 'Data Collection Agent', color: 'primary' },
+            { name: 'Carbon Calculation Agent', color: 'success' },
+            { name: 'Recommendation Agent', color: 'warning' },
+            { name: 'Simulation Agent', color: 'info' },
+            { name: 'Reporting Agent', color: 'danger' }
+        ];
+        
+        var communications = [
+            "Sending operational data...",
+            "Requesting additional context...",
+            "Sharing emissions profile...",
+            "Requesting scenario analysis...",
+            "Sending simulation results...",
+            "Sharing prioritized recommendations...",
+            "Providing source data references...",
+            "Sending calculation methodologies...",
+            "Sharing projection data...",
+            "Requesting additional data points..."
+        ];
+        
+        // Random sender and receiver
+        var sender = Math.floor(Math.random() * agents.length);
+        var receiver;
+        do {
+            receiver = Math.floor(Math.random() * agents.length);
+        } while (receiver === sender);
+        
+        // Random message
+        var message = communications[Math.floor(Math.random() * communications.length)];
+        
+        // Current time
+        var now = new Date();
+        var time = now.getHours().toString().padStart(2, '0') + ":" + 
+                   now.getMinutes().toString().padStart(2, '0') + ":" + 
+                   now.getSeconds().toString().padStart(2, '0');
+        
+        // Create new log entry
+        var logEntry = document.createElement('div');
+        logEntry.innerHTML = `<span class="text-muted">[${time}]</span> <span class="text-${agents[sender].color}">${agents[sender].name} → ${agents[receiver].name}:</span> ${message}`;
+        
+        // Add to log
+        var communicationLog = document.getElementById('communicationLog');
+        communicationLog.appendChild(logEntry);
+        
+        // Scroll to bottom
+        communicationLog.scrollTop = communicationLog.scrollHeight;
+    }
+    
+    // Add new communication log every 5 seconds
+    setInterval(addCommunicationLog, 5000);
+    
+    // Agent details modal
+    function viewAgentDetails(agentName) {
+        var modal = new bootstrap.Modal(document.getElementById('agentDetailsModal'));
+        document.getElementById('agentDetailsTitle').innerText = agentName + ' Details';
+        
+        // Simulate loading data
+        document.getElementById('agentDetailsBody').innerHTML = `
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading agent details...</p>
+            </div>
+        `;
+        
+        modal.show();
+        
+        // Simulate API call delay
+        setTimeout(function() {
+            var content = '';
+            
+            if (agentName === 'Data Collection Agent') {
+                content = `
+                    <div class="card mb-3">
+                        <div class="card-header bg-primary text-white">Agent Overview</div>
+                        <div class="card-body">
+                            <p><strong>Type:</strong> Data Collection</p>
+                            <p><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                            <p><strong>Last Restart:</strong> April 29, 2025 08:45 AM</p>
+                            <p><strong>Uptime:</strong> 1 day, 3 hours, 12 minutes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header">Recent Activity</div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Action</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>09:15:32</td>
+                                        <td>Retrieve energy consumption data</td>
+                                        <td><span class="badge bg-success">Success</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>09:10:15</td>
+                                        <td>Process business travel records</td>
+                                        <td><span class="badge bg-success">Success</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>09:05:03</td>
+                                        <td>Validate data format</td>
+                                        <td><span class="badge bg-success">Success</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Data Sources</div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Energy Consumption Data
+                                    <span class="badge bg-primary rounded-pill">2 files</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Business Travel Records
+                                    <span class="badge bg-primary rounded-pill">1 file</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Waste Management Data
+                                    <span class="badge bg-primary rounded-pill">1 file</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else {
+                content = `
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> Detailed information for ${agentName} would be displayed here.
+                    </div>
+                    
+                    <div class="card mb-3">
+                        <div class="card-header">Agent Activity</div>
+                        <div class="card-body">
+                            <p>This agent is currently active and performing its designated tasks.</p>
+                            <p>In a production environment, this view would show detailed metrics, logs, and configuration options for the ${agentName}.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container" style="height: 200px;">
+                        <canvas id="detailActivityChart"></canvas>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('agentDetailsBody').innerHTML = content;
+            
+            // If we have a canvas, initialize a chart
+            if (document.getElementById('detailActivityChart')) {
+                var detailCtx = document.getElementById('detailActivityChart').getContext('2d');
+                var detailChart = new Chart(detailCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['09:00', '09:05', '09:10', '09:15', '09:20', '09:25', '09:30'],
+                        datasets: [{
+                            label: 'Activity Level',
+                            data: [5, 8, 12, 7, 9, 6, 10],
+                            borderColor: 'rgba(0, 120, 212, 1)',
+                            backgroundColor: 'rgba(0, 120, 212, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }, 1500);
+    }
+</script>
+{% endblock %}
